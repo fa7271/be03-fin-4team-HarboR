@@ -14,7 +14,9 @@
 .DS_Store
 # AWS User-specific
 .idea/**/aws.xml
-
+*.pdf
+*.xlsx
+*.pptx
 # Generated files
 .idea/**/contentModel.xml
 
