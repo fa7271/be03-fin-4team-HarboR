@@ -1,9 +1,11 @@
 package com.example.harbor_total.Annual.domain;
 
 import com.example.harbor_total.Attendance.domain.Attendance;
-import com.example.harbor_total.Attendance.dto.request.AttendanceFlexibleWorkReqDto;
 import com.example.harbor_total.global.support.Approval;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -64,7 +66,6 @@ public class Annual {
                 attendanceFlexibleWorkReqDto.getThirdSignId(),
                 attendance);
     }
-
 
     public void updateApprovalDate(Approval approval){
         if(approval.name().equals("FIRST")){

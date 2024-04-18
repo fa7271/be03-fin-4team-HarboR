@@ -168,4 +168,20 @@ public class AttendanceService {
         Optional<List<Object[]>> byMyTeamAttendanceCount = employeeRepository.findByMyTeamAttendanceCount(MyTeamCode);
         return byMyTeamAttendanceCount;
     }
+
+
+    public Optional<List<Object[]>> getListGroupByTeam(String employeeId) {
+        Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(() -> new IllegalArgumentException("없는 회원입니다."));
+
+//        내팀 가져오기
+        String MyTeamCode = employee.getTeamCode();
+
+        LocalDateTime start = LocalDate.now().atStartOfDay();
+        LocalDateTime end = LocalDate.now().atTime(23, 59, 59);
+
+
+        Optional<List<Object[]>> byMyTeamAttendanceCount = employeeRepository.findByMyTeamAttendanceCount(MyTeamCode);
+        return byMyTeamAttendanceCount;
+    }
 }
+//출근 5명 , 휴가 : 3
