@@ -1,7 +1,6 @@
 package com.example.harbor_total.Annual.domain;
 
 import com.example.harbor_total.Attendance.domain.Attendance;
-import com.example.harbor_total.Attendance.dto.request.AttendanceFlexibleWorkReqDto;
 import com.example.harbor_total.global.support.Approval;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,14 +11,14 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 /*
- * annualId: 휴가 번호(PK)
- * attendanceId: 근태 번호(FK)
- * annualCount: 휴가 추가/차감일
- * adjustmentDate: 조정 적용일
- * adjustmentComment: 조정 사유
- * adjustmentUpdateDate: 승인 날짜
- * authorityPersonId: 최종 승인권자
- * */
+* annualId: 휴가 번호(PK)
+* attendanceId: 근태 번호(FK)
+* annualCount: 휴가 추가/차감일
+* adjustmentDate: 조정 적용일
+* adjustmentComment: 조정 사유
+* adjustmentUpdateDate: 승인 날짜
+* authorityPersonId: 최종 승인권자
+* */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
