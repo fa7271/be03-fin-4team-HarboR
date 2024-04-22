@@ -47,6 +47,9 @@ public class AttendanceService {
                 attendanceFlexibleWorkReqDto.getWorkPolicy().equals(O03.name()) ||
                 attendanceFlexibleWorkReqDto.getWorkPolicy().equals(O09.name())) {
             return requestvacation(attendanceFlexibleWorkReqDto, employeeId);
+        } else if (attendanceFlexibleWorkReqDto.getWorkPolicy().equals(O03)) {
+            return requestbusinesstrip(attendanceFlexibleWorkReqDto, employeeId);
+
         } else {
             throw new IllegalArgumentException("해당하는 근무는 없습니다.");
         }

@@ -67,6 +67,7 @@ public class Annual {
                 attendance);
     }
 
+
     public void updateApprovalDate(Approval approval){
         if(approval.name().equals("FIRST")){
             this.firstApprovalDate = String.valueOf(LocalDate.now());
