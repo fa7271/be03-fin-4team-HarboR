@@ -1,6 +1,7 @@
 package com.example.harbor_total.Annual.domain;
 
 import com.example.harbor_total.Attendance.domain.Attendance;
+import com.example.harbor_total.Attendance.dto.request.AttendanceFlexibleWorkReqDto;
 import com.example.harbor_total.global.support.Approval;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
