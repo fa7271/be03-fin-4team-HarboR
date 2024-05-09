@@ -28,10 +28,10 @@ public class AdminController {
         return new ResponseEntity<>(new CommonResponse("Employee number transmitted successfully", email), HttpStatus.OK);
     }
 
-    @GetMapping("/employeelist")
-    public ResponseEntity<CommonResponse> employeeList(Pageable pageable) {
-        return new ResponseEntity<>(new CommonResponse<>("Employee list retrieved successfully", loginService.findAll(pageable)), HttpStatus.OK);
-    }
+//    @GetMapping("/employeelist")
+//    public ResponseEntity<CommonResponse> employeeList(Pageable pageable) {
+//        return new ResponseEntity<>(new CommonResponse<>("Employee list retrieved successfully", loginService.findAll(pageable)), HttpStatus.OK);
+//    }
 
     @DeleteMapping("/delete/{email}")
     public ResponseEntity<CommonResponse> deleteUser(@PathVariable(value = "email") String email) {

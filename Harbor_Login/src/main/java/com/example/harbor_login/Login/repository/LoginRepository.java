@@ -24,7 +24,7 @@ public interface LoginRepository extends JpaRepository<Login,String> {
     @Query("SELECT MAX(l.employeeId) FROM Login l")
     String findMaxEmployeeNumber();
 
-    Page<Login> findAllByDelYnNotOrderByCreatedAt(Boolean delYn, Pageable pageable);
+    Long countAllByDelYn(Boolean delYn);
 
 //    @Modifying
 //    @Transactional

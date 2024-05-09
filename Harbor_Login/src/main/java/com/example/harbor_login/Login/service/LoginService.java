@@ -90,10 +90,10 @@ public class LoginService {
 //        }
         // 다 통과
 
-    public Page<LoginMemberResDto> findAll(Pageable pageable) {
-
-        return loginRepository.findAllByDelYnNotOrderByCreatedAt(true, pageable).map(LoginMemberResDto::mapToMemberResDto);
-    }
+//    public Page<LoginMemberResDto> findAll(Pageable pageable) {
+//
+//        return loginRepository.findAllByDelYnNotOrderByCreatedAt(true, pageable).map(LoginMemberResDto::mapToMemberResDto);
+//    }
 
     public String delete(String email) {
         Login login = loginRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("없는 회원입니다."));
@@ -180,9 +180,9 @@ public class LoginService {
         }
     }
 
-    public Page<LoginMemberResDto> getcountallemployee(Pageable pageable) {
+    public Long getcountallemployee(Pageable pageable) {
 
-        return loginRepository.findAllByDelYnNotOrderByCreatedAt(false, pageable).map(LoginMemberResDto::mapToMemberResDto);
+        return loginRepository.countAllByDelYn(false);
     }
 
     public Login getMemberByEmployeeId(String employeeId) {

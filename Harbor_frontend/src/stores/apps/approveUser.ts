@@ -63,8 +63,9 @@ export const ApproveStore = defineStore({
               'Content-Type': 'multipart/form-data'
             }
           });
+          console.log()
         } catch (error) {
-          alert(error.error_message)
+          alert("fuck u")
         }
       },
       async getAttendanceList(token: string | null) {

@@ -14,5 +14,13 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="@database-1.cbku8mggudio.ap-northeast-2.rds.amazonaws.com" uuid="2a250856-70e3-4a91-ac8e-a46606054349">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <remarks>database-1.cbku8mggudio.ap-northeast-2.rds.amazonaws.com</remarks>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://database-1.cbku8mggudio.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
