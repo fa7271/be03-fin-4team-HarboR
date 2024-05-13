@@ -18,6 +18,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -40,6 +42,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @Slf4j
+@CacheConfig(cacheNames = "Employees")
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final TestProducer testProducer;
@@ -51,7 +54,9 @@ public class EmployeeService {
         this.totalClient = totalClient;
     }
 
+    @Cacheable(key = "'all'")
     public List<EmployeeResDto> findAll(EmployeeSearchDto employeeSearchDto, Pageable pageable) {
+        log.info("캐싱하기 이후");
         Specification<T> specification =
                 EmployeeSpecification.likeName(employeeSearchDto.getName())
                         .and(EmployeeSpecification.likeEmployeeId(employeeSearchDto.getEmployeeId()))
