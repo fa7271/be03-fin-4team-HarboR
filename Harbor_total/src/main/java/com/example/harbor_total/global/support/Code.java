@@ -89,6 +89,10 @@ public enum Code {
     O03("출장"),
     O04("휴가"),
     O05("휴계"),
+    O06("고정"),
+    O07("시차"),
+    O08("반차"),
+    O09("병가"),
 
     G01("남자"),
     G02("여자"),
@@ -144,9 +148,15 @@ public enum Code {
     T03("기획팀"),
     T04("인사팀"),
     T05("마케팅팀"),
-    K1000("(주)Harbor");
+    K1000("(주)Harbor"),
+
+    X01("지각"),
+    X02("정상"),
+    X03("업무중"),
+    X04("퇴근오류");
 
     private final String message;
+
     Code(String message) {
         this.message = message;
     }

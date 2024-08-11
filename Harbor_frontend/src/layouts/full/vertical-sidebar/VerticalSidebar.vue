@@ -6,7 +6,6 @@ import sidebarItems from './sidebarItem';
 import NavGroup from './NavGroup/NavGroup.vue';
 import NavItem from './NavItem/NavItem.vue';
 import NavCollapse from './NavCollapse/NavCollapse.vue';
-import ExtraBox from './extrabox/ExtraBox.vue';
 import Logo from '../logo/LogoMain.vue';
 
 const customizer = useCustomizerStore();
@@ -14,21 +13,16 @@ const sidebarMenu = shallowRef(sidebarItems);
 </script>
 
 <template>
-  <v-navigation-drawer
-    left
-    v-model="customizer.Sidebar_drawer"
-    elevation="0"
-    rail-width="75"
-    mobile-breakpoint="lg"
-    app
-    class="leftSidebar"
-    :rail="customizer.mini_sidebar"
-    expand-on-hover
-  >
+  <v-navigation-drawer left v-model="customizer.Sidebar_drawer" elevation="0" rail-width="75" mobile-breakpoint="lg" app
+    class="leftSidebar" :rail="customizer.mini_sidebar" expand-on-hover>
     <!---Logo part -->
 
-    <div class="pa-5">
-      <Logo />
+    <div class="pa-5" style="display: flex; align-items: center;">
+      <!-- <Logo /> -->
+      <router-link to="/dashboard/default">
+        <img src="@/assets/images/logos/harborlogo.png" style="height: 58px;">
+      </router-link>
+      <h3 style="margin-left: 10px;">HarboR</h3>
     </div>
     <!-- ---------------------------------------------- -->
     <!---Navigation -->
@@ -48,11 +42,8 @@ const sidebarMenu = shallowRef(sidebarItems);
           <!---End Single Item-->
         </template>
       </v-list>
-      <div class="pa-4">
-        <ExtraBox />
-      </div>
       <div class="pa-4 text-center">
-        <v-chip color="inputBorder" size="small"> v1.3.0 </v-chip>
+        <v-chip color="inputBorder" size="small"> v1.0.0 </v-chip>
       </div>
     </perfect-scrollbar>
   </v-navigation-drawer>

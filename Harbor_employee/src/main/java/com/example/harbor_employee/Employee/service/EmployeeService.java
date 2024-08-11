@@ -1,15 +1,17 @@
 package com.example.harbor_employee.Employee.service;
 
-import com.example.harbor_employee.global.support.Code;
 import com.example.harbor_employee.Employee.domain.Employee;
+import com.example.harbor_employee.Employee.dto.NameBirthDto;
 import com.example.harbor_employee.Employee.dto.request.EmployeeSearchDto;
 import com.example.harbor_employee.Employee.dto.request.EmployeeUpdateRequestDto;
 import com.example.harbor_employee.Employee.dto.response.*;
 import com.example.harbor_employee.Employee.repository.EmployeeRepository;
-import com.example.harbor_employee.PersonnelAppointment.domain.PersonnelAppointment;
+import com.example.harbor_employee.client.TotalClient;
+import com.example.harbor_employee.client.dto.EmployeeStatusDto;
 import com.example.harbor_employee.global.util.EmployeeSpecification;
 import com.example.harbor_employee.client.dto.LoginMemberResDto;
-import com.example.harbor_employee.kafka.KafkaTestDto;
+import com.example.harbor_employee.global.util.S3UploadUtil;
+import com.example.harbor_employee.kafka.dto.KafkaDetailDto;
 import com.example.harbor_employee.kafka.TestProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -25,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -33,10 +34,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,10 +44,14 @@ import java.util.stream.Collectors;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final TestProducer testProducer;
+    private final TotalClient totalClient;
+    private final S3UploadUtil s3UploadUtil;
 
-    public EmployeeService(EmployeeRepository employeeRepository, TestProducer testProducer) {
+    public EmployeeService(EmployeeRepository employeeRepository, TestProducer testProducer, TotalClient totalClient, S3UploadUtil s3UploadUtil) {
         this.employeeRepository = employeeRepository;
         this.testProducer = testProducer;
+        this.totalClient = totalClient;
+        this.s3UploadUtil = s3UploadUtil;
     }
 
     public List<EmployeeResDto> findAll(EmployeeSearchDto employeeSearchDto, Pageable pageable) {
@@ -60,15 +63,30 @@ public class EmployeeService {
 
         Page<Employee> employeePage = employeeRepository.findAll(specification, pageable);
         List<Employee> employeeList = employeePage.getContent();
-        List<EmployeeResDto> employeeResDtos = new ArrayList<>();
-        employeeResDtos = employeeList.stream()
-                .map(e-> EmployeeResDto.builder()
-                        .employeeId(e.getEmployeeId())
-                        .department(Code.valueOf(e.getDepartmentCode()).getMessage())
-                        .team(Code.valueOf(e.getTeamCode()).getMessage())
-                        .position(Code.valueOf(e.getPositionCode()).getMessage())
-                        .name(e.getName())
-                        .build()).collect(Collectors.toList());
+        List<String> employeeIdList = new ArrayList<>();
+        for(Employee employee: employeeList){
+            employeeIdList.add(employee.getEmployeeId());
+        }
+        List<EmployeeStatusDto> employeeStatusDtos = totalClient.getStatus(employeeIdList);
+
+        Map<String, EmployeeStatusDto> employeeStatusMap = employeeStatusDtos.stream()
+                .collect(Collectors.toMap(EmployeeStatusDto::getEmployeeId, Function.identity()));
+
+        List<EmployeeResDto> employeeResDtos = employeeList.stream()
+                .map(e -> {
+                    EmployeeStatusDto status = employeeStatusMap.getOrDefault(e.getEmployeeId(), null);
+                    return EmployeeResDto.builder()
+                            .employeeId(e.getEmployeeId())
+                            .department(e.getDepartmentCode())
+                            .team(e.getTeamCode())
+                            .position(e.getPositionCode())
+                            .name(e.getName())
+                            .profileImagePath(e.getProfileImage())
+                            .email(e.getEmail())
+                            .phone(e.getPhone())
+                            .status(status != null ? status.getStatusCode() : null)
+                            .build();
+                }).collect(Collectors.toList());
         return employeeResDtos;
     }
 
@@ -93,18 +111,18 @@ public class EmployeeService {
                 .name(employee.getName())
                 .email(employee.getEmail())
                 .phone(employee.getPhone())
-                .gender(Code.valueOf(employee.getGenderCode()).getMessage())
+                .gender(employee.getGenderCode())
                 .birthDate(employee.getBirthDate())
                 .socialSecurityNumber(employee.getSocialSecurityNumber())
                 .address(employee.getAddress())
-                .duty(Code.valueOf(employee.getDutyCode()).getMessage())
-                .position(Code.valueOf(employee.getPositionCode()).getMessage())
-                .team(Code.valueOf(employee.getTeamCode()).getMessage())
-                .department(Code.valueOf(employee.getDepartmentCode()).getMessage())
-                .status(Code.valueOf(employee.getStatusCode()).getMessage())
+                .duty(employee.getDutyCode())
+                .position(employee.getPositionCode())
+                .team(employee.getTeamCode())
+                .department(employee.getDepartmentCode())
+                .status(employee.getStatusCode())
                 .careerYMD(employee.getCareerYMD())
                 .joinDate(employee.getJoinDate())
-                .bank(Code.valueOf(employee.getBankCode()).getMessage())
+                .bank(employee.getBankCode())
                 .accountNumber(employee.getAccountNumber())
                 .profileImagePath(employee.getProfileImage())
                 .leavingDate(employee.getLeavingDate())
@@ -115,8 +133,11 @@ public class EmployeeService {
     public GetEmployResponse getUserPosition(String employeeId) {
         try{
             Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(IllegalArgumentException::new);
+            System.out.println("employee.getPositionCode() = " + employee.getPositionCode());
             GetEmployResponse getEmployResponse = new GetEmployResponse();
-//            getEmployResponse.setPositionCode(employee.getPositionCode().getDescription());
+            getEmployResponse.getResults().add(new GetEmployResponse.Result(employee.getPositionCode()));
+            System.out.println("getEmployResponse.getResults() = " + getEmployResponse.getResults());
+            getEmployResponse.getResults().add(new GetEmployResponse.Result(employee.getPositionCode()));
             return getEmployResponse;
         } catch(Exception e){
             System.out.println(e.getMessage());
@@ -124,30 +145,23 @@ public class EmployeeService {
         return null;
     }
 
-    public EmployeeDetailResDto updateEmployee(EmployeeUpdateRequestDto request, String employeeId) {
-        Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(() -> new IllegalArgumentException(" 없는 employee 입니다 "));
-
-        MultipartFile multipartFile = request.getProfileImage();
-        String fileName = multipartFile.getOriginalFilename();
-
-        Path path = Paths.get("/Users/song/Desktop/코딩공부/tmp", employee.getEmployeeId() + "_" + fileName);
-        employee.setImage(path.toString());
-        employee.updateEmployee(path.toString(),request.getPhone());
-        try {
-            byte[] bytes = multipartFile.getBytes();
-            Files.write(path, bytes, StandardOpenOption.CREATE, StandardOpenOption.WRITE); // 없으면 넣고 있으면 덮어쓰기
-        } catch (IOException e) {
-            throw new IllegalArgumentException("image not available");
+    public EmployeeDetailResDto updateEmployee(EmployeeUpdateRequestDto request, MultipartFile file) throws IOException {
+        Employee employee = employeeRepository.findByEmployeeId(request.getEmployeeId()).orElseThrow(() -> new IllegalArgumentException(" 없는 employee 입니다 "));
+        String filePath = "";
+        employee.updateEmployee(filePath,request.getPhone(),request.getAddress());
+        if(file != null) {
+            if(!file.getContentType().startsWith("image/"))
+                throw new IOException("적절하지 않은 파일 확장자입니다.");
+            filePath = s3UploadUtil.upload(file, "profile");
+            employee.setImage(filePath);
         }
-
         return EmployeeDetailResDto.toDto(employee);
     }
 
     public List<ExcelEmployeeDto> create(MultipartFile file) throws IOException {
 
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-
-
+        System.out.println("extension = " + extension);
         if (!extension.equals("xlsx") && !extension.equals("xls")) {
             throw new IllegalArgumentException("엑셀 파일만 올려주세요.");
         }
@@ -186,6 +200,7 @@ public class EmployeeService {
                         excelEmployeeDto.setDutyCode(cell4.getStringCellValue());
 
                     Cell cell5 = row.getCell(4);
+                    System.out.println("cell5 = " + cell5);
                     if (cell5 != null) {
                         excelEmployeeDto.setStatusCode(cell5.getStringCellValue());
                     }
@@ -233,7 +248,7 @@ public class EmployeeService {
                         excelEmployeeDto.setPhone(cell14.getStringCellValue());
                     dataList.add(excelEmployeeDto);
                     employee.updateEmployee(excelEmployeeDto);
-                    KafkaTestDto kafkaTestDto = KafkaTestDto.builder()
+                    KafkaDetailDto kafkaDetailDto = KafkaDetailDto.builder()
                             .employeeId(employee.getEmployeeId())
                             .teamCode(employee.getTeamCode())
                             .positionCode(employee.getPositionCode())
@@ -251,7 +266,7 @@ public class EmployeeService {
                             .name(employee.getName())
                             .email(employee.getEmail())
                             .build();
-                    testProducer.sendToKafka("first_create_user_data", kafkaTestDto);
+                    testProducer.sendToKafka("createUser", kafkaDetailDto);
                 }
             }
             return dataList;
@@ -259,5 +274,17 @@ public class EmployeeService {
             // 파일 처리 중 예외 발생 시 예외를 던짐
             throw new IOException("파일을 처리하는 도중 오류가 발생");
         }
+    }
+
+    public NameBirthDto getObject(String employeeId) {
+        Employee employee = employeeRepository.findByEmployeeId(employeeId).orElseThrow(() -> new IllegalArgumentException("없는 회원입니다."));
+        return NameBirthDto.builder()
+                .birth(employee.getBirthDate())
+                .name(employee.getName())
+                .build();
+    }
+
+    public List<EmployeeStatusDto> getemployeeStautsList(List<String> employeeIdList){
+        return totalClient.getStatus(employeeIdList);
     }
 }

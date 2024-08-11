@@ -342,19 +342,9 @@ const MainRoutes = {
       component: () => import('@/views/apps/users/social-profile/GalleryPage.vue')
     },
     {
-      name: 'Profile 01',
-      path: '/app/user/account-profile/profile1',
+      name: 'Profile',
+      path: '/app/user/:employeeId/profile',
       component: () => import('@/views/apps/users/account-profile/profile1/ProfilePage1.vue')
-    },
-    {
-      name: 'Profile 02',
-      path: '/app/user/account-profile/profile2',
-      component: () => import('@/views/apps/users/account-profile/profile2/ProfilePage2.vue')
-    },
-    {
-      name: 'Profile 03',
-      path: '/app/user/account-profile/profile3',
-      component: () => import('@/views/apps/users/account-profile/profile3/ProfilePage3.vue')
     },
     {
       name: 'Style 01',
@@ -373,13 +363,29 @@ const MainRoutes = {
     },
     {
       name: 'List',
-      path: '/app/user/list1',
-      component: () => import('@/views/apps/users/list/ListPage1.vue')
+      path: '/app/user/list',
+      component: () => import('@/views/apps/users/list/EmployeeListPage.vue'),
+      props: true
     },
     {
-      name: 'List2',
-      path: '/app/user/list2',
-      component: () => import('@/views/apps/users/list/ListPage2.vue')
+      name: 'SalaryList',
+      path: '/app/user/salarylist',
+      component: () => import('@/views/apps/users/list/SalaryListPage.vue')
+    },
+    {
+      name: 'SalaryDetail',
+      path: '/app/user/salarydetail/:salaryId',
+      component: () => import('@/views/apps/users/list/SalaryDetail.vue')
+    },
+    {
+      name: 'SalaryCreate',
+      path: '/app/user/salaryCreate',
+      component: () => import('@/views/apps/users/list/SalaryCreate.vue')
+    },
+    {
+      name: 'SalaryDetail',
+      path: '/app/user/salarydetail/:salaryId',
+      component: () => import('@/views/apps/users/list/SalaryDetail.vue')
     },
     {
       name: 'Contact List',
@@ -393,7 +399,7 @@ const MainRoutes = {
     },
     {
       name: 'Mail',
-      path: '/app/mail',
+      path: '/noticeList',
       component: () => import('@/views/apps/mail/MailPage.vue')
     },
     {
@@ -425,8 +431,72 @@ const MainRoutes = {
       name: 'Product Listing',
       path: '/ecommerce/productlist',
       component: () => import('@/views/apps/eCommerce/ProductList.vue')
+    },
+    {
+      name: 'TestTimeline',
+      path: '/testtimeline',
+      component: () => import('@/views/apps/test/GSTC.vue')
+    },
+    {
+      name: 'TestQalendar',
+      path: '/testqalendar',
+      component: () => import('@/views/apps/test/TestQalendar.vue')
+    },
+    {
+      name: 'AttendanceCreate',
+      path: '/attendance/create',
+      component: () => import('@/views/apps/users/list/AttendanceCreate.vue')
+    },
+    {
+      name: 'AttendanceListReq',
+      path: '/attendance/list/req',
+      component: () => import('@/views/apps/users/list/AttendanceListReq.vue')
+    },
+    {
+      name: 'AttendanceListRes',
+      path: '/attendance/list/res',
+      component: () => import('@/views/apps/users/list/AttendanceListRes.vue')
+    },
+    // {
+    //   name: 'noticeList',
+    //   path: '/noticeList',
+    //   component: () => import('@/views/apps/users/list/noticeList.vue')
+    // },
+    {
+      name: 'noticedetail',
+      path: '/noticedetail/:id',
+      component: () => import('@/views/apps/users/list/noticedetail.vue')
+    },
+    {
+      name: 'attendancedatail',
+      path: '/dashboard/analytics/attendancedetail',
+      component: () => import('@/views/apps/users/list/AttendanceDetail.vue')
+    },
+    {
+      name: 'noticeCreate',
+      path: '/noticecreate',
+      component: () => import('@/views/apps/users/list/noticeCreate.vue')
+    },
+    {
+      name: 'severancePay',
+      path: '/severancePay',
+      component: () => import('@/views/apps/users/list/severancePay.vue')
+    },
+    {
+      name: 'ScheduleQalendar',
+      path: '/schedule/qalendar',
+      component: () => import('@/views/apps/calendar/ScheduleQalendar.vue')
+    },
+    {
+      name: 'TeamSchedule',
+      path: '/team/schedule',
+      component: () => import('@/views/apps/calendar/TeamScheduleQalendar.vue')
+    },
+    {
+      name: 'noticeUpdate',
+      path: '/noticeUpdate',
+      component: () => import('@/views/apps/users/list/noticeupdate.vue')
     }
   ]
 };
-
 export default MainRoutes;
