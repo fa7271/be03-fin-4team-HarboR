@@ -39,10 +39,8 @@ public class AttendanceService {
 
         AttendanceListResDto attendanceListResDto;
 
-//        유연 근무제 (승인 안 받아도 됨)
         if (attendanceFlexibleWorkReqDto.getWorkPolicy().equals(O07.name())) {
             return requestflexiblework(attendanceFlexibleWorkReqDto, employeeId);
-//        휴     가 (반차, 병가, 반차)
         } else if (attendanceFlexibleWorkReqDto.getWorkPolicy().equals(O04.name()) ||
                 attendanceFlexibleWorkReqDto.getWorkPolicy().equals(O08.name()) ||
                 attendanceFlexibleWorkReqDto.getWorkPolicy().equals(O03.name()) ||
