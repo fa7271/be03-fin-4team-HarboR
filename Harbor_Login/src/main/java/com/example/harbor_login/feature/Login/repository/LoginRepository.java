@@ -1,13 +1,12 @@
-package com.example.harbor_login.Login.repository;
+package com.example.harbor_login.feature.Login.repository;
 
-import com.example.harbor_login.Login.domain.Login;
+import com.example.harbor_login.feature.Login.domain.Login;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Repository

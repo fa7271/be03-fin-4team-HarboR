@@ -1,7 +1,7 @@
-package com.example.harbor_login.Login.controller;
+package com.example.harbor_login.feature.Login.controller;
 
-import com.example.harbor_login.Login.service.EmailService;
-import com.example.harbor_login.Login.service.LoginService;
+import com.example.harbor_login.feature.Login.service.EmailService;
+import com.example.harbor_login.feature.Login.service.LoginService;
 import com.example.harbor_login.global.common.CommonResponse;
 import com.example.harbor_login.global.config.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;

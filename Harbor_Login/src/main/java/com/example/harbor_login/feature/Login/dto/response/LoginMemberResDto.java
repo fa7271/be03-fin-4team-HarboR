@@ -1,6 +1,6 @@
-package com.example.harbor_login.Login.dto.response;
+package com.example.harbor_login.feature.Login.dto.response;
 
-import com.example.harbor_login.Login.domain.Login;
+import com.example.harbor_login.feature.Login.domain.Login;
 import com.example.harbor_login.global.support.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

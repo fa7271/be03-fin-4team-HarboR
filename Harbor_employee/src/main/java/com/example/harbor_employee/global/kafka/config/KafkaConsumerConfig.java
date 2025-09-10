@@ -1,4 +1,4 @@
-package com.example.harbor_employee.kafka.config;
+package com.example.harbor_employee.global.kafka.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

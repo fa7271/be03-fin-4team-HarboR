@@ -1,7 +1,7 @@
 spring:
   profiles:
     group:
-      "local" : "local, mail, s3"
+      "local" : "local, mail"
     active : local
 ---
 spring:

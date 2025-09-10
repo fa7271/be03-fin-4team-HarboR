@@ -1,15 +1,14 @@
-package com.example.harbor_employee.Employee.controller;
+package com.example.harbor_employee.feature.Employee.controller;
 
-import com.example.harbor_employee.Employee.dto.NameBirthDto;
-import com.example.harbor_employee.Employee.dto.request.EmployeeSearchDto;
-import com.example.harbor_employee.Employee.dto.request.EmployeeUpdateRequestDto;
-import com.example.harbor_employee.Employee.dto.response.EmployeeResDto;
-import com.example.harbor_employee.Employee.dto.response.ExcelEmployeeDto;
-import com.example.harbor_employee.Employee.dto.response.GetEmployResponse;
+import com.example.harbor_employee.feature.Employee.dto.NameBirthDto;
+import com.example.harbor_employee.feature.Employee.dto.request.EmployeeSearchDto;
+import com.example.harbor_employee.feature.Employee.dto.request.EmployeeUpdateRequestDto;
+import com.example.harbor_employee.feature.Employee.dto.response.EmployeeResDto;
+import com.example.harbor_employee.feature.Employee.dto.response.ExcelEmployeeDto;
+import com.example.harbor_employee.feature.Employee.dto.response.GetEmployResponse;
 import com.example.harbor_employee.client.TotalClient;
-import com.example.harbor_employee.client.dto.EmployeeStatusDto;
 import com.example.harbor_employee.client.dto.LoginMemberResDto;
-import com.example.harbor_employee.Employee.service.EmployeeService;
+import com.example.harbor_employee.feature.Employee.service.EmployeeService;
 import com.example.harbor_employee.global.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController

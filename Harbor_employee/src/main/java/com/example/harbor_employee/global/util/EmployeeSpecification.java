@@ -1,6 +1,6 @@
 package com.example.harbor_employee.global.util;
 
-import com.example.harbor_employee.Employee.domain.Employee;
+import com.example.harbor_employee.feature.Employee.domain.Employee;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;

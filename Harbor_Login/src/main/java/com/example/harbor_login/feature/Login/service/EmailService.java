@@ -1,7 +1,7 @@
-package com.example.harbor_login.Login.service;
+package com.example.harbor_login.feature.Login.service;
 import javax.mail.internet.MimeMessage;
-import com.example.harbor_login.Login.domain.Login;
-import com.example.harbor_login.Login.repository.LoginRepository;
+import com.example.harbor_login.feature.Login.domain.Login;
+import com.example.harbor_login.feature.Login.repository.LoginRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;

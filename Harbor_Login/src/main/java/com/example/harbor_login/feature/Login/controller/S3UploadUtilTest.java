@@ -1,4 +1,4 @@
-package com.example.harbor_login.Login.controller;
+package com.example.harbor_login.feature.Login.controller;
 
 import com.example.harbor_login.global.util.S3UploadUtil;
 import lombok.RequiredArgsConstructor;

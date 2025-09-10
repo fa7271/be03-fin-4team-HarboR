@@ -1,4 +1,4 @@
-package com.example.harbor_employee.Employee.dto.response;
+package com.example.harbor_employee.feature.Employee.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

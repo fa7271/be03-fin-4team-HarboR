@@ -1,4 +1,4 @@
-package com.example.harbor_employee.kafka;
+package com.example.harbor_employee.global.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package com.example.harbor_login.Login.dto.request;
+package com.example.harbor_login.feature.Login.dto.request;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.example.harbor_login.Login.domain;
+package com.example.harbor_login.feature.Login.domain;
 
 import com.example.harbor_login.global.support.Role;
 import lombok.AccessLevel;

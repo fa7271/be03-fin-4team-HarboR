@@ -1,12 +1,10 @@
-package com.example.harbor_employee.Employee.dto.response;
+package com.example.harbor_employee.feature.Employee.dto.response;
 
-import com.example.harbor_employee.Employee.domain.Employee;
-import com.example.harbor_employee.client.dto.LoginMemberResDto;
+import com.example.harbor_employee.feature.Employee.domain.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.kafka.common.security.auth.Login;
 
 @Data
 @Builder

@@ -1,6 +1,6 @@
-package com.example.harbor_employee.Employee.domain;
+package com.example.harbor_employee.feature.Employee.domain;
 
-import com.example.harbor_employee.Employee.dto.response.ExcelEmployeeDto;
+import com.example.harbor_employee.feature.Employee.dto.response.ExcelEmployeeDto;
 import com.example.harbor_employee.PersonnelAppointment.domain.PersonnelAppointment;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

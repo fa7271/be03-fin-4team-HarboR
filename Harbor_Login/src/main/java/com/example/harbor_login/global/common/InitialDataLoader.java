@@ -1,7 +1,7 @@
 package com.example.harbor_login.global.common;
 
-import com.example.harbor_login.Login.domain.Login;
-import com.example.harbor_login.Login.repository.LoginRepository;
+import com.example.harbor_login.feature.Login.domain.Login;
+import com.example.harbor_login.feature.Login.repository.LoginRepository;
 import com.example.harbor_login.global.support.Role;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

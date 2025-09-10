@@ -89,4 +89,6 @@ modules.xml
 .idea/misc.xml
 *.ipr
 
+Kafka/
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij+iml

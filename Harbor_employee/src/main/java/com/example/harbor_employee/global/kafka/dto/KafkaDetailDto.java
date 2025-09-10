@@ -1,4 +1,4 @@
-package com.example.harbor_employee.kafka.dto;
+package com.example.harbor_employee.global.kafka.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
