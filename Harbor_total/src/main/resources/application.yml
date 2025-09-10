@@ -1,4 +1,9 @@
-
+spring:
+  profiles:
+    group:
+      "local" : "local, mail"
+    active : local
+---
 spring:
   application:
     name: total-service
